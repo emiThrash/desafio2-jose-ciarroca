@@ -83,13 +83,13 @@ const stylesProductForm = StyleSheet.create({
   input: {
     height: 35,
     padding: 3,
-    borderTopLeftRadius: 5,
-    borderBottomLeftRadius: 5,
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
     color: Colors.white,
     borderWidth: 1,
     borderColor: Colors.grayLight,
     backgroundColor: Colors.grayLight,
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: '600'
   },
   button: {
@@ -98,14 +98,14 @@ const stylesProductForm = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    borderTopRightRadius: 5,
-    borderBottomRightRadius: 5,
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
     borderColor: Colors.greenAlter,
     borderWidth: 2
   },
   icon: {
-    width: 24,
-    height: 24,
+    width: 22,
+    height: 22,
     alignSelf: 'flex-end',
   },
   errorContainer: {

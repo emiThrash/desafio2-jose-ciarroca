@@ -28,6 +28,7 @@ function ProductList({categoryId, callbackAddProduct}) {
     setSearchText(text);
   };
 
+  // FlatList (Origen de Datos, Componentes a renderizar y Clave de Iteración)
   return(
     <View style={stylesProductList.container}>
       <Text style={stylesProductList.title}>{currentCategory?.title}</Text>
@@ -45,14 +46,15 @@ function ProductList({categoryId, callbackAddProduct}) {
   );
 }
 
+
 const stylesProductList = StyleSheet.create({
   container: {
     flex: 0,
     flexDirection: 'column',
     alignItems: 'top',
-    padding: 5,
+    padding: 40,
     borderTopColor: Colors.grayLight,
-    borderTopWidth: 1,
+    borderTopWidth: 9,
     borderBottomColor: Colors.grayLight,
     borderBottomWidth: 1,
   },

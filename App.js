@@ -9,6 +9,7 @@ import ItemList from './src/components/items/ItemList';
 import ProductList from './src/components/products/ProductList';
 
 export default function App() {
+  //useState y useEffect-Hooks para controlar Estado y ciclod e vida de la app
   const [list, setList] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(1);
   const [showHome, setShowHome] = useState(true);
