@@ -1,8 +1,28 @@
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import ItemRow from './ItemRow';
 import { Colors } from '../../globals/styles/Colors';
+import { useEffect, useState } from 'react';
+
+//ItemListCategory - Screen Carrito
 
 function ItemList({list, callbackDeleteItem}) {
+
+  /*
+
+  const [products , setProducts] = useState ([])
+
+  useEffect (() => {
+    if(list) {
+      const products = allProducts.filter((product)=> product.cotegory === list)
+      const filteredProducts = products.filter()
+
+    }
+
+  }, [])
+
+  */
+
+
   return(
     <View style={stylesItemList.container}>
       { list.length > 0 ?
@@ -13,6 +33,7 @@ function ItemList({list, callbackDeleteItem}) {
         /> :
         <Text style={stylesItemList.emptyLabel}>Agregar productos</Text>
       }
+      
     </View>
   );
 }

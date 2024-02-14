@@ -4,6 +4,8 @@ import { Colors } from '../../globals/styles/Colors';
 import iconSearch from '../../../assets/icon-search.png';
 import iconCancel from '../../../assets/icon-cancel.png';
 
+//Search dentro de productos
+
 function ProductForm({callbackSearchProduct, lastSearch}) {
   const [productToSearch, setProductToSearch] = useState(lastSearch);
   const [error, setError] = useState("");
@@ -33,6 +35,8 @@ function ProductForm({callbackSearchProduct, lastSearch}) {
     callbackSearchProduct("");
   };
 
+  //Incorporación del TextInput
+
   return(
     <>
       <View style={stylesProductForm.container}>
@@ -46,12 +50,15 @@ function ProductForm({callbackSearchProduct, lastSearch}) {
         </View>
         <View style={stylesProductForm.col2}>
           <View style={stylesProductForm.button}>
+
             <Pressable onPress={onSearchProductPress}>
               <Image source={iconSearch} style={stylesProductForm.icon} />
             </Pressable>
+            
             <Pressable onPress={onCleanPress}>
               <Image source={iconCancel} style={stylesProductForm.icon} />
             </Pressable>
+
           </View>
         </View>
       </View>

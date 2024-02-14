@@ -3,6 +3,8 @@ import { Colors } from '../../globals/styles/Colors';
 import iconAdd from '../../../assets/icon-add.png';
 import iconDetail from '../../../assets/icon-detail.png';
 
+//Lista de productos dentro de Categorías
+
 function ProductRow({item, callbackAddProduct}) {
   const onAddProduct = () => {
     callbackAddProduct(item.id);
@@ -25,9 +27,9 @@ function ProductRow({item, callbackAddProduct}) {
           ${item.price}
         </Text>
       </View>
-      <View style={stylesProductRow.colActions}>
+      <View style={stylesProductRow.colActions}> 
         <Pressable onPress={onViewDetail}>
-          <Image source={iconDetail} style={stylesProductRow.icon} />
+          <Image source={iconDetail} style={stylesProductRow.icon} /> 
         </Pressable>
         <Pressable onPress={onAddProduct}>
           <Image source={iconAdd} style={stylesProductRow.icon} />

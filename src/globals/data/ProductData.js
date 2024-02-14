@@ -7,6 +7,8 @@ import image6 from '../../../assets/products/edicion2d.jpg';
 import image7 from '../../../assets/products/marcasimple.jpg';
 import image8 from '../../../assets/products/manualdeidentidad.jpg';
 
+//products
+
 export const ProductData = [
     {id: 1, 
         categoryId: 1, 

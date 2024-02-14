@@ -9,7 +9,7 @@ import ItemList from './src/components/items/ItemList';
 import ProductList from './src/components/products/ProductList';
 
 export default function App() {
-  //useState y useEffect-Hooks para controlar Estado y ciclod e vida de la app
+  //useState y useEffect - Hooks para controlar Estado y ciclo de vida de la app -
   const [list, setList] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(1);
   const [showHome, setShowHome] = useState(true);
@@ -21,6 +21,7 @@ export default function App() {
   if(!fontsLoaded){
     return null;
   }
+
 
   // Items
   const addItem = (itemTitle) => {
@@ -45,7 +46,6 @@ export default function App() {
 
   // Navigation
   const hideAllSites = () => {
-    setShowHome(false);
     setShowCart(false);
     setShowProducts(false);
   };
@@ -56,10 +56,20 @@ export default function App() {
     setShowCart(true);
   };
 
+  //
+  const goToHome = () => {
+    hideAllSites();
+    setShowHome(true);
+  };
+
   return (
     <View style={stylesApp.container}>
       <StatusBar/>
-      <Header callbackSelectCategory={changeCategory} callbackGoToCart={goToCart}></Header>
+      <Header 
+      callbackSelectCategory={changeCategory}
+      callbackGoToCart={goToCart}
+      callbackGoToHome={goToHome}
+      ></Header>
       {
         showHome ?
           <Home></Home> :
