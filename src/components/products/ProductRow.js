@@ -3,6 +3,8 @@ import { Colors } from '../../globals/styles/Colors';
 import iconAdd from '../../../assets/icon-add.png';
 import iconDetail from '../../../assets/icon-detail.png';
 
+//Lista de productos dentro de Categorías
+
 function ProductRow({item, callbackAddProduct}) {
   const onAddProduct = () => {
     callbackAddProduct(item.id);
@@ -25,9 +27,9 @@ function ProductRow({item, callbackAddProduct}) {
           ${item.price}
         </Text>
       </View>
-      <View style={stylesProductRow.colActions}>
+      <View style={stylesProductRow.colActions}> 
         <Pressable onPress={onViewDetail}>
-          <Image source={iconDetail} style={stylesProductRow.icon} />
+          <Image source={iconDetail} style={stylesProductRow.icon} /> 
         </Pressable>
         <Pressable onPress={onAddProduct}>
           <Image source={iconAdd} style={stylesProductRow.icon} />
@@ -43,10 +45,10 @@ const stylesProductRow = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     flex: 0,
-    marginVertical: 2,
-    padding: 4,
+    marginVertical: 9,
+    padding: 6,
     backgroundColor: Colors.coralAlter,
-    borderRadius: 5
+    borderRadius: 0
   },
   text: {
     color: Colors.grayDark,
@@ -63,7 +65,7 @@ const stylesProductRow = StyleSheet.create({
   },
   colDescription: {
     width: '55%',
-    paddingHorizontal: 4
+    paddingHorizontal: 20
   },
   colActions: {
     width: '20%',
@@ -80,7 +82,7 @@ const stylesProductRow = StyleSheet.create({
     flex: 1,
     width: 'auto',
     height: 'auto',
-    borderRadius: 5
+    borderRadius: 9
   }
 });
 

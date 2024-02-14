@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 function Home(){
     return(
         <View style={styleHome.container}>
-            <Text style={styleHome.textWelcome}>Dev & Design</Text>
+            <Text style={styleHome.textWelcome}>Dev-&-Design</Text>
             <Text style={styleHome.text}>Servicios de Diseño y Desarrollo</Text>
         </View>
     );

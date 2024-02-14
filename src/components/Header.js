@@ -4,6 +4,7 @@ import { Colors } from '../globals/styles/Colors';
 import CategoryList from './categories/CategoryList';
 import iconBars from '../../assets/icon-bars.png';
 import iconCart from '../../assets/icon-cart.png';
+import iconHome from '../../assets/home-icon.png';
 
 function Header({callbackSelectCategory, callbackGoToCart}) {
   const [visibleList, setVisibleList] = useState(false);
@@ -22,6 +23,14 @@ function Header({callbackSelectCategory, callbackGoToCart}) {
     callbackGoToCart();
   };
 
+
+  const onGoToHome = () => {
+    setVisibleList(false);
+    callbackGoToHome();
+  };
+
+
+
   return(
     <View style={stylesHeader.container}>
       <View style={stylesHeader.row}>
@@ -30,11 +39,21 @@ function Header({callbackSelectCategory, callbackGoToCart}) {
             <Image source={iconBars} style={stylesHeader.icon} />
           </Pressable>
         </View>
+
+        <View style={stylesHeader.sideColumn}>
+          <Pressable onPress={onGoToHome}>
+            <Image source={iconHome} style={stylesHeader.icon} />
+          </Pressable>
+        </View>
+
         <View style={stylesHeader.midColumn}>
           <View style={stylesHeader.brand}>
-            <Text style={stylesHeader.brandText}>LIT Design</Text>
+            <Text style={stylesHeader.brandText}>LIT design</Text>
           </View>
         </View>
+
+        
+
         <View style={stylesHeader.sideColumn}>
           <Pressable onPress={onGoToCart}>
             <Image source={iconCart} style={stylesHeader.icon} />
