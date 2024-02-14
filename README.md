@@ -17,7 +17,7 @@ Bienvenido a LIT Designs, una aplicación móvil desarrollada en React Native y 
 
 1. Clona este repositorio.
    ```bash
-   git clone [https://github.com/emiThrash/desafio2-jose-ciarroca.git]
+   git clone https://github.com/emiThrash/desafio2-jose-ciarroca.git
 
 2. Instala las dependencias.
    ```bash
