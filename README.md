@@ -12,17 +12,20 @@ Bienvenido a LIT Designs, una aplicación móvil desarrollada en React Native y 
 - [ ] Proceso de compra sencillo y seguro.
 - [ ] Notificaciones para mantener a los usuarios informados sobre el progreso de sus pedidos.
 
-
 ## Instalación
 
 1. Clona este repositorio.
    ```bash
    git clone https://github.com/emiThrash/desafio2-jose-ciarroca.git
 
-2. Instala las dependencias.
+2. Instala las dependencias.(Consulta la documentación correspondiente para tener las últimas versiones)
    ```bash
    cd tu-repositorio
    npm install
+   npm install @react-navigation/native
+   npx expo install react-native-screens
+   npx expo install react-native-safe-area-context
+   npm install @react-navigation/native
 
 4. Inicia la aplicación.
    ```bash
