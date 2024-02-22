@@ -6,7 +6,7 @@ import iconBars from '../../assets/icon-bars.png';
 import iconCart from '../../assets/icon-cart.png';
 import iconHome from '../../assets/home-icon.png';
 
-function Header({callbackSelectCategory, callbackGoToCart}) {
+function Header({callbackSelectCategory, callbackGoToCart, callbackGoToHome}) {
   const [visibleList, setVisibleList] = useState(false);
   
   const visibleListTrigger = () => {
@@ -42,7 +42,7 @@ function Header({callbackSelectCategory, callbackGoToCart}) {
 
         <View style={stylesHeader.sideColumn}>
           <Pressable onPress={onGoToHome}>
-            <Image source={iconHome} style={stylesHeader.icon} />
+            <Image source={iconHome} style={stylesHeader.icon1} />
           </Pressable>
         </View>
 
@@ -72,7 +72,7 @@ function Header({callbackSelectCategory, callbackGoToCart}) {
     
 const stylesHeader = StyleSheet.create({
   container: {
-    padding: 10,
+    padding: 19,
     alignItems: 'center',
     justifyContent: 'flex-start',
     backgroundColor: Colors.greenMain,
@@ -100,6 +100,10 @@ const stylesHeader = StyleSheet.create({
   icon: {
     width: 30,
     height: 30
+  },
+  icon1: {
+    width: 50,
+    height: 50
   },
 });
 
