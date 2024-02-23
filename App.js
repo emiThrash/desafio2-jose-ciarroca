@@ -17,11 +17,10 @@ export default function App() {
   const [showProducts, setShowProducts] = useState(false);
   const [currentCategoryId, setCurrentCategoryId] = useState(null);
   const [fontsLoaded] = useFonts(Fonts);
-  
+
   if(!fontsLoaded){
     return null;
   }
-
 
   // Items
   const addItem = (itemTitle) => {
@@ -56,14 +55,13 @@ export default function App() {
     setShowCart(true);
   };
 
-  //
   const goToHome = () => {
     hideAllSites();
     setShowHome(true);
   };
 
   return (
-    <View style={stylesApp.container}>
+    <View style={styles.container}>
       <StatusBar/>
       <Header 
       callbackSelectCategory={changeCategory}
@@ -92,7 +90,7 @@ export default function App() {
   );
 }
 
-const stylesApp = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',

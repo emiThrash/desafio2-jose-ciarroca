@@ -23,6 +23,10 @@ Bienvenido a LIT Designs, una aplicación móvil desarrollada en React Native y 
    ```bash
    cd tu-repositorio
    npm install
+   npm install @react-navigation/native
+   npx expo install react-native-screens
+   npx expo install react-native-safe-area-context
+   npm install @react-navigation/native-stack
 
 4. Inicia la aplicación.
    ```bash
