@@ -1,38 +1,45 @@
-import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Image, Pressable, useWindowDimensions } from 'react-native';
+import { useDispatch } from 'react-redux';
 import { Colors } from '../../globals/styles/Colors';
+import { DisplaySizes } from '../../globals/styles/DisplaySizes';
+import { setProductIdSelected, addCartItem } from '../../features/shop/shopSlice';
 import iconAdd from '../../../assets/icon-add.png';
 import iconDetail from '../../../assets/icon-detail.png';
 
 //Lista de productos dentro de Categorías
 
-function ProductRow({item, callbackAddProduct}) {
+function ProductRow({navigation, item}) {
+  const dispatch = useDispatch();
+  const { height, width } = useWindowDimensions();
+
   const onAddProduct = () => {
-    callbackAddProduct(item.id);
+    dispatch(addCartItem({product: item, quantity: 1}));
   };
 
   const onViewDetail = () => {
-    
+    dispatch(setProductIdSelected(item.id));
+    navigation.navigate("ProductDetail");
   };
 
   return(
     <View style={stylesProductRow.container}>
-      <View style={stylesProductRow.colImage}>
+      <View style={width < DisplaySizes.minWidth ? stylesProductRow.colImageMin : stylesProductRow.colImage}>
         <Image source={item.image} style={stylesProductRow.image} resizeMode='cover' />
       </View>
-      <View style={stylesProductRow.colDescription}>
-        <Text style={stylesProductRow.text}>
+      <View style={width < DisplaySizes.minWidth ? stylesProductRow.colDescriptionMin : stylesProductRow.colDescription}>
+        <Text style={width < DisplaySizes.minWidth ? stylesProductRow.textMin : stylesProductRow.text}>
           {item.title}
         </Text>
-        <Text style={stylesProductRow.textPrice}>
+        <Text style={width < DisplaySizes.minWidth ? stylesProductRow.textPriceMin : stylesProductRow.textPrice}>
           ${item.price}
         </Text>
       </View>
-      <View style={stylesProductRow.colActions}> 
+      <View style={stylesProductRow.colActions}>
         <Pressable onPress={onViewDetail}>
-          <Image source={iconDetail} style={stylesProductRow.icon} /> 
+          <Image source={iconDetail} style={width < DisplaySizes.minWidth ? stylesProductRow.iconMin : stylesProductRow.icon} />
         </Pressable>
         <Pressable onPress={onAddProduct}>
-          <Image source={iconAdd} style={stylesProductRow.icon} />
+          <Image source={iconAdd} style={width < DisplaySizes.minWidth ? stylesProductRow.iconMin : stylesProductRow.icon} />
         </Pressable>
       </View>
     </View>
@@ -55,13 +62,26 @@ const stylesProductRow = StyleSheet.create({
     fontSize: 20,
     fontFamily: 'Dosis-Bold'
   },
+  textMin: {
+    color: Colors.grayDark,
+    fontSize: 16,
+    fontFamily: 'Dosis-Bold'
+  },
   textPrice: {
     color: Colors.grayDark,
     fontSize: 20,
     fontFamily: 'Dosis-Bold'
   },
+  textPriceMin: {
+    color: Colors.grayDark,
+    fontSize: 16,
+    fontFamily: 'Dosis-Bold'
+  },
   colImage: {
     width: '25%'
+  },
+  colImageMin: {
+    width: '20%'
   },
   colDescription: {
     width: '55%',
@@ -73,9 +93,18 @@ const stylesProductRow = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around'
   },
+  colDescriptionMin: {
+    width: '60%',
+    paddingHorizontal: 4
+  },
   icon: {
     width: 24,
     height: 24,
+    alignSelf: 'flex-end',
+  },
+  iconMin: {
+    width: 20,
+    height: 20,
     alignSelf: 'flex-end',
   },
   image: {

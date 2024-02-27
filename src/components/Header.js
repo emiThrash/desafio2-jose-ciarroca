@@ -1,33 +1,20 @@
-import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
-import React, { useState } from 'react';
+import { StyleSheet, Text, View, Image, Pressable, useWindowDimensions } from 'react-native';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Colors } from '../globals/styles/Colors';
+import { DisplaySizes } from '../globals/styles/DisplaySizes';
+import { setShowMenu } from '../features/shop/shopSlice';
 import CategoryList from './categories/CategoryList';
 import iconBars from '../../assets/icon-bars.png';
-import iconCart from '../../assets/icon-cart.png';
-import iconHome from '../../assets/home-icon.png';
 
-function Header({callbackSelectCategory, callbackGoToCart, callbackGoToHome}) {
-  const [visibleList, setVisibleList] = useState(false);
+function Header({navigation}) {
+  const dispatch = useDispatch();
+  const showMenu = useSelector(state => state.shopReducer.value.showMenu);
+  const { height, width } = useWindowDimensions();
   
   const visibleListTrigger = () => {
-    setVisibleList(!visibleList);
+    dispatch(setShowMenu(!showMenu));
   }
-
-  const onSelectCategory = (id) => {
-    setVisibleList(false);
-    callbackSelectCategory(id);
-  };
-
-  const onGoToCart = () => {
-    setVisibleList(false);
-    callbackGoToCart();
-  };
-
-
-  const onGoToHome = () => {
-    setVisibleList(false);
-    callbackGoToHome();
-  };
 
 
 
@@ -36,36 +23,24 @@ function Header({callbackSelectCategory, callbackGoToCart, callbackGoToHome}) {
       <View style={stylesHeader.row}>
         <View style={stylesHeader.sideColumn}>
           <Pressable onPress={visibleListTrigger}>
-            <Image source={iconBars} style={stylesHeader.icon} />
+            <Image source={iconBars} style={width < DisplaySizes.minWidth ? stylesHeader.iconMin : stylesHeader.icon} />
           </Pressable>
         </View>
-
-        <View style={stylesHeader.sideColumn}>
-          <Pressable onPress={onGoToHome}>
-            <Image source={iconHome} style={stylesHeader.icon1} />
-          </Pressable>
-        </View>
-
         <View style={stylesHeader.midColumn}>
           <View style={stylesHeader.brand}>
-            <Text style={stylesHeader.brandText}>LIT design</Text>
+            <Text style={width < DisplaySizes.minWidth ? stylesHeader.brandTextMin : stylesHeader.brandText}>Lit Design</Text>
           </View>
         </View>
-
-        
-
         <View style={stylesHeader.sideColumn}>
-          <Pressable onPress={onGoToCart}>
-            <Image source={iconCart} style={stylesHeader.icon} />
-          </Pressable>
+
         </View>
       </View>
       {
-        visibleList ?
-          <CategoryList callbackSelectCategory={onSelectCategory} visibleList={visibleList}></CategoryList> :
+        showMenu ?
+          <CategoryList
+            navigation={navigation}></CategoryList> :
           <></>
       }
-      
     </View>
   );
 }
@@ -95,6 +70,10 @@ const stylesHeader = StyleSheet.create({
   },
   brandText: {
     fontSize: 39,
+    fontFamily: 'Passion'
+  },
+  brandTextMin: {
+    fontSize: 24,
     fontFamily: 'Passion'
   },
   icon: {

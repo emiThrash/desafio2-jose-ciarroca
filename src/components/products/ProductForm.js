@@ -1,14 +1,19 @@
-import { StyleSheet, TextInput, View, Pressable, Text, Image } from 'react-native';
+import { StyleSheet, TextInput, View, Pressable, Text, Image, useWindowDimensions } from 'react-native';
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Colors } from '../../globals/styles/Colors';
+import { DisplaySizes } from '../../globals/styles/DisplaySizes';
+import { setProductSearchText } from '../../features/shop/shopSlice';
 import iconSearch from '../../../assets/icon-search.png';
 import iconCancel from '../../../assets/icon-cancel.png';
 
 //Search dentro de productos
 
-function ProductForm({callbackSearchProduct, lastSearch}) {
+function ProductForm({lastSearch}) {
+  const dispatch = useDispatch();
   const [productToSearch, setProductToSearch] = useState(lastSearch);
   const [error, setError] = useState("");
+  const { height, width } = useWindowDimensions();
 
   useEffect(() => {
     setProductToSearch(lastSearch);
@@ -23,16 +28,16 @@ function ProductForm({callbackSearchProduct, lastSearch}) {
   const onSearchProductPress = () =>{
     if(validateSearchText(productToSearch)){
       setError("");
-      callbackSearchProduct(productToSearch);
+      dispatch(setProductSearchText(productToSearch));
     }else{
-      setError("Solo letras para la busqueda");
+      setError("Solo letras");
     }
   };
 
   const onCleanPress = () =>{
     setError("");
     setProductToSearch("");
-    callbackSearchProduct("");
+    dispatch(setProductSearchText(""));
   };
 
   //Incorporación del TextInput
@@ -42,7 +47,7 @@ function ProductForm({callbackSearchProduct, lastSearch}) {
       <View style={stylesProductForm.container}>
         <View style={stylesProductForm.col1}>
           <TextInput
-            style={stylesProductForm.input}
+            style={width < DisplaySizes.minWidth ? stylesProductForm.inputMin : stylesProductForm.input}
             placeholder='Producto'
             placeholderTextColor={Colors.grayWhite}
             onChangeText={(text) => setProductToSearch(text)}
@@ -50,15 +55,12 @@ function ProductForm({callbackSearchProduct, lastSearch}) {
         </View>
         <View style={stylesProductForm.col2}>
           <View style={stylesProductForm.button}>
-
             <Pressable onPress={onSearchProductPress}>
-              <Image source={iconSearch} style={stylesProductForm.icon} />
+              <Image source={iconSearch} style={width < DisplaySizes.minWidth ? stylesProductForm.iconMin : stylesProductForm.icon} />
             </Pressable>
-            
             <Pressable onPress={onCleanPress}>
-              <Image source={iconCancel} style={stylesProductForm.icon} />
+              <Image source={iconCancel} style={width < DisplaySizes.minWidth ? stylesProductForm.iconMin : stylesProductForm.icon} />
             </Pressable>
-
           </View>
         </View>
       </View>
@@ -66,7 +68,7 @@ function ProductForm({callbackSearchProduct, lastSearch}) {
         error == "" ?
         <></> :
         <View style={stylesProductForm.errorContainer}>
-          <Text style={stylesProductForm.errorText}>{error}</Text>
+          <Text style={width < DisplaySizes.minWidth ? stylesProductForm.errorTextMin : stylesProductForm.errorText}>{error}</Text>
         </View>
       }
     </>
@@ -99,6 +101,18 @@ const stylesProductForm = StyleSheet.create({
     fontSize: 25,
     fontWeight: '600'
   },
+  inputMin: {
+    height: 33,
+    padding: 3,
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5,
+    color: Colors.white,
+    borderWidth: 1,
+    borderColor: Colors.blueAlter,
+    backgroundColor: Colors.blueAlter,
+    fontSize: 18,
+    fontWeight: '400'
+  },
   button: {
     height: 37,
     flex: 1,
@@ -109,6 +123,11 @@ const stylesProductForm = StyleSheet.create({
     borderBottomRightRadius: 0,
     borderColor: Colors.greenAlter,
     borderWidth: 2
+  },
+  iconMin: {
+    width: 22,
+    height: 22,
+    alignSelf: 'flex-end',
   },
   icon: {
     width: 22,
@@ -122,7 +141,12 @@ const stylesProductForm = StyleSheet.create({
   errorText: {
     color: Colors.redAlert,
     fontSize: 18
+  },
+  errorTextMin: {
+    color: Colors.redAlert,
+    fontSize: 16
   }
+  
 });
 
 export default ProductForm;
