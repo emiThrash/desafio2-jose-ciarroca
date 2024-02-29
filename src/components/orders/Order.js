@@ -51,7 +51,7 @@ const stylesOrder = StyleSheet.create({
   total: {
     paddingRight: 5,
     fontSize: 18,
-    fontFamily: 'JosefinBold',
+    fontFamily: 'Noto-Bold',
     textAlign: 'right'
   }
 });

@@ -90,7 +90,7 @@ const stylesTabNavigator = StyleSheet.create({
   },
   tabBarLandscape: {
     flex: 0,
-    backgroundColor: Colors.blueMain,
+    backgroundColor: Colors.greenMain,
     shadowColor: 'black',
     elevation: 4,
     position: 'absolute',
@@ -102,8 +102,8 @@ const stylesTabNavigator = StyleSheet.create({
   },
   buttonFocused: {
     padding: 5,
-    backgroundColor: Colors.blueAlter,
-    borderRadius: 5
+    backgroundColor: Colors.greenAlter,
+    borderRadius: 10
   },
   button: {
     padding: 5,

@@ -108,8 +108,8 @@ const stylesProductForm = StyleSheet.create({
     borderBottomLeftRadius: 5,
     color: Colors.white,
     borderWidth: 1,
-    borderColor: Colors.blueAlter,
-    backgroundColor: Colors.blueAlter,
+    borderColor: Colors.greenAlter,
+    backgroundColor: Colors.greenAlter,
     fontSize: 18,
     fontWeight: '400'
   },

@@ -46,28 +46,28 @@ const stylesCartRow = StyleSheet.create({
     flex: 0,
     marginVertical: 2,
     padding: 4,
-    backgroundColor: Colors.pinkAlter,
+    backgroundColor: Colors.grayLight,
     borderRadius: 5
   },
   text: {
     color: Colors.grayDark,
     fontSize: 20,
-    fontFamily: 'PlayFairBold'
+    fontFamily: 'Dosis-Bold'
   },
   textMin: {
     color: Colors.grayDark,
     fontSize: 16,
-    fontFamily: 'PlayFairBold'
+    fontFamily: 'Dosis-Bold'
   },
   textPrice: {
     color: Colors.grayDark,
     fontSize: 20,
-    fontFamily: 'PlayFairBold'
+    fontFamily: 'Dosis-Bold'
   },
   textPriceMin: {
     color: Colors.grayDark,
     fontSize: 16,
-    fontFamily: 'PlayFairBold'
+    fontFamily: 'Dosis-Bold'
   },
   colImage: {
     width: '25%'

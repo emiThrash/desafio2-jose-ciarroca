@@ -25,20 +25,20 @@ const stylesHeaderAlter = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomColor: Colors.grayLight,
     borderBottomWidth: 1,
-    backgroundColor: Colors.blueMain,
+    backgroundColor: Colors.greenMain,
   },
   title: {
     marginBottom: 10,
     textAlign: 'center',
     fontSize: 24,
-    fontFamily: 'JosefinBold',
+    fontFamily: 'Dosis-Bold',
     color: Colors.black
   },
   titleMin: {
     marginBottom: 8,
     textAlign: 'center',
     fontSize: 20,
-    fontFamily: 'JosefinBold',
+    fontFamily: 'Dosis-Bold',
     color: Colors.black
   }
 });

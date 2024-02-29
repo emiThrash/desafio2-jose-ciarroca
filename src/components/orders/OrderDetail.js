@@ -76,32 +76,32 @@ const stylesOrderDetail = StyleSheet.create({
   buttonBack: {
     width: '100%',
     height: 40,
-    backgroundColor: Colors.pinkAlter
+    backgroundColor: Colors.coralAlter
   },  
   buttonBackMin: {
     width: '100%',
     height: 36,
-    backgroundColor: Colors.pinkAlter
+    backgroundColor: Colors.coralAlter
   },
   textBack: {
     width: '100%',
     lineHeight: 40,
     color: Colors.grayDark,
     fontSize: 22,
-    fontFamily: 'JosefinBold',
+    fontFamily: 'Dosis-Bold',
     textAlign: 'center'
   },
   textBackMin: {
     lineHeight: 36,
     color: Colors.grayDark,
     fontSize: 18,
-    fontFamily: 'PlayFairBold',
+    fontFamily: 'Dosis-Bold',
     textAlign: 'center'
   },
   total: {
     paddingRight: 5,
     fontSize: 18,
-    fontFamily: 'JosefinBold',
+    fontFamily: 'Dosis-Bold',
     textAlign: 'right'
   }
 });

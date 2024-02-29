@@ -16,7 +16,7 @@ function Home({navigation}){
 const styleHome = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    padding: 20,
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingBottom: DisplaySizes.paddingBottomNavigator
@@ -39,11 +39,11 @@ const styleHome = StyleSheet.create({
     width: '100%',
     fontSize: 20,
     fontFamily: 'Dosis',
-    textAlign: 'justify'
+    textAlign: 'center'
   },
   textMin: {
     width: '100%',
-    fontSize: 16,
+    fontSize: 12,
     fontFamily: 'Dosis',
     textAlign: 'justify'
   },

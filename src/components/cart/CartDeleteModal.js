@@ -83,14 +83,14 @@ const stylesCartDeleteModal = StyleSheet.create({
     paddingHorizontal: 5,
     textAlign: 'center',
     fontSize: 20,
-    fontFamily: 'PlayFair'
+    fontFamily: 'Noto'
   },
   modalDetailMin: {
     paddingVertical: 15,
     paddingHorizontal: 3,
     textAlign: 'center',
     fontSize: 17,
-    fontFamily: 'PlayFair'
+    fontFamily: 'Noto'
   },
   modalActions: {
     flexDirection: 'row',
@@ -104,7 +104,7 @@ const stylesCartDeleteModal = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 3,
-    backgroundColor: Colors.redAlert,
+    backgroundColor: Colors.grayLight,
   },
   modalDeleteButtonText: {
     fontWeight: '600',

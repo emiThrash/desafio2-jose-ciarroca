@@ -11,7 +11,7 @@ function OrderList({list, navigation}) {
           renderItem={({item}) => <OrderRow item={item} navigation={navigation} />}
           keyExtractor={item => item.id}
         /> :
-        <Text style={stylesOrderList.emptyLabel}>Agregue órdenes</Text>
+        <Text style={stylesOrderList.emptyLabel}>Agregar órdenes</Text>
       }
     </View>
   );

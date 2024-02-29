@@ -30,28 +30,28 @@ const stylesOrderCartRow = StyleSheet.create({
     flex: 0,
     marginVertical: 2,
     padding: 4,
-    backgroundColor: Colors.pinkAlter,
+    backgroundColor: Colors.grayLight,
     borderRadius: 5,
   },
   text: {
     color: Colors.grayDark,
     fontSize: 20,
-    fontFamily: 'PlayFairBold'
+    fontFamily: 'Noto-Bold'
   },
   textMin: {
     color: Colors.grayDark,
     fontSize: 16,
-    fontFamily: 'PlayFairBold'
+    fontFamily: 'Noto-Bold'
   },
   textPrice: {
     color: Colors.grayDark,
     fontSize: 20,
-    fontFamily: 'PlayFairBold'
+    fontFamily: 'Noto-Bold'
   },
   textPriceMin: {
     color: Colors.grayDark,
     fontSize: 16,
-    fontFamily: 'PlayFairBold'
+    fontFamily: 'Noto-Bold'
   },
   colImage: {
     width: '25%'

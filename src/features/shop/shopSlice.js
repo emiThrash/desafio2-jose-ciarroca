@@ -63,7 +63,7 @@ export const shopSlice = createSlice({
       state.value.currentCartIndex++;
       
       calculateTotal(state);
-      console.log("se agregó el producto al carrito, falta crear una alerta de esto xD", action.payload);
+      console.log("Pendiente: Crear alerta", action.payload);
     },
     setShowMenu: (state, action) => {
       state.value.showMenu = action.payload;
