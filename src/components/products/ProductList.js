@@ -4,32 +4,36 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Colors } from '../../globals/styles/Colors';
 import { DisplaySizes } from '../../globals/styles/DisplaySizes';
 import { setProductSearchText } from '../../features/shop/shopSlice';
+import { useGetProductsByCategoryQuery } from '../../services/shopService';
 import ProductRow from './ProductRow';
 import ProductForm from './ProductForm';
 
-function ProductList({categoryId, callbackAddProduct}) {
+function ProductList({navigation}) {
   const dispatch = useDispatch();
   const [list, setList] = useState([]);
   const [currentCategory, setCurrentCategory] = useState(null);
   const { height, width } = useWindowDimensions();
   const searchText = useSelector(state => state.shopReducer.value.productSearchText);
   const categorySelected = useSelector(state => state.shopReducer.value.categorySelected);
-  const products = useSelector(state => state.shopReducer.value.products);
+  const categoryId = categorySelected.id;
+  const { data: products, isLoading, error } = useGetProductsByCategoryQuery(categoryId);
 
   useEffect(() => {
     if(categoryId != null){
       dispatch(setProductSearchText(""));
+      setCurrentCategory(categorySelected);
     }
   },[categoryId]);
 
   useEffect(() => {
     if(categoryId != null){
       setCurrentCategory(categorySelected);
-      setList(products.filter(p => p.categoryId == categoryId && p.title.toLowerCase().includes(searchText.toLowerCase())));
+      if(!isLoading && products){
+        setList(Object.values(products).filter(p => p.title.toLowerCase().includes(searchText.toLowerCase())));
+      }
     }
-  },[categoryId, searchText]);
+  },[searchText, isLoading, products]);
 
-  // FlatList (Origen de Datos, Componentes a renderizar y Clave de Iteración)
   return(
     <View style={stylesProductList.container}>
       <Text style={width < DisplaySizes.minWidth ? stylesProductList.titleMin : stylesProductList.title}>
@@ -45,7 +49,7 @@ function ProductList({categoryId, callbackAddProduct}) {
           keyExtractor={item => item.id}
         />
         :
-        <Text style={stylesProductList.emptyLabel}>No se encuentran items {currentCategory?.title} </Text>
+        <Text style={stylesProductList.emptyLabel}>No se encontraron productos en {currentCategory?.title} </Text>
       }
     </View>
   );

@@ -30,7 +30,7 @@ function ProductForm({lastSearch}) {
       setError("");
       dispatch(setProductSearchText(productToSearch));
     }else{
-      setError("Solo letras");
+      setError("No se admiten números");
     }
   };
 
