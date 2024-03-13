@@ -1,42 +1,37 @@
 import { StyleSheet, Text, View, Image, Pressable, useWindowDimensions, ScrollView } from 'react-native';
 import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Colors } from '../../globals/styles/Colors';
-import { DisplaySizes } from '../../globals/styles/DisplaySizes';
-import { addCartItem } from '../../features/shop/shopSlice';
+import { DisplaySizes, IsUnderMinWidth, IsLandscape } from '../../globals/styles/DisplaySizes';
 import { useGetProductByIdQuery } from '../../services/shopService';
+import ProductAddInput from './ProductAddInput';
 
 function ProductDetail({navigation}) {
-  const dispatch = useDispatch();
   const { height, width } = useWindowDimensions();
-  const [ isLandscape, setIsLandscape ] = useState(false);
   const [ imageHeight, setImageHeight ] = useState(0);
   const [ imageWidth, setImageWidth ] = useState(0);
   const [ item, setItem ] = useState(null);
   const productId = useSelector(state => state.shopReducer.value.productIdSelected);
   const { data: product, isLoading, error } = useGetProductByIdQuery(productId);
 
+  const isUnderMinWidth = IsUnderMinWidth();
+  const isLandscape = IsLandscape();
+
   useEffect(()=>{
     if(width > height){
-      setIsLandscape(true);
       setImageHeight(height*0.5);
       setImageWidth(width*0.5);
     }else{
-      setIsLandscape(false);
       setImageHeight(height*0.5);
       setImageWidth(width);
     }
-  }, [height, width]);
+  }, [width, height]);
 
   useEffect(()=>{
     if(!isLoading && product){
       setItem(Object.values(product)[0]);
     }
   }, [product]);
-
-  const onAddProduct = () => {
-    dispatch(addCartItem({product: item, quantity: 1}));
-  };
 
   const onBackToList = () => {
     navigation.navigate("ProductList", {categoryId: item.categoryId});
@@ -49,8 +44,8 @@ function ProductDetail({navigation}) {
         <View style={stylesProductDetail.zoneBack}>
           <Pressable
             onPress={onBackToList}
-            style={width < DisplaySizes.minWidth ? stylesProductDetail.buttonBackMin : stylesProductDetail.buttonBack}>
-            <Text style={width < DisplaySizes.minWidth ? stylesProductDetail.textBackMin : stylesProductDetail.textBack}>
+            style={[stylesProductDetail.buttonBack, isUnderMinWidth ? stylesProductDetail.buttonBackMin : stylesProductDetail.buttonBackMax]}>
+            <Text style={[stylesProductDetail.textBack, isUnderMinWidth ? stylesProductDetail.textBackMin : stylesProductDetail.textBackMax]}>
               Volver a la lista
             </Text>
           </Pressable>
@@ -62,20 +57,18 @@ function ProductDetail({navigation}) {
             </View>
           </View>
           <View style={{width: isLandscape ? '50%' : '100%'}}>
-            <Text style={width < DisplaySizes.minWidth ? stylesProductDetail.textMin : stylesProductDetail.text}>
+            <Text style={[stylesProductDetail.text, isUnderMinWidth ? stylesProductDetail.textMin : stylesProductDetail.textMax]}>
               {item.title}
             </Text>
-            <Text style={width < DisplaySizes.minWidth ? stylesProductDetail.textDescriptionMin : stylesProductDetail.textDescription}>
+            <Text style={[stylesProductDetail.text, isUnderMinWidth ? stylesProductDetail.textDescriptionMin : stylesProductDetail.textDescriptionMax]}>
               {item.description}
             </Text>
-            <Text style={width < DisplaySizes.minWidth ? stylesProductDetail.textPriceMin : stylesProductDetail.textPrice}>
+            <Text style={[stylesProductDetail.textPrice, isUnderMinWidth ? stylesProductDetail.textPriceMin : stylesProductDetail.textPriceMax]}>
               ${item.price}
             </Text>
-            <Pressable onPress={onAddProduct} style={stylesProductDetail.buyButton}>
-              <Text style={width < DisplaySizes.minWidth ? stylesProductDetail.buyTextMin : stylesProductDetail.buyText}>
-                Comprar
-              </Text>
-            </Pressable>
+            <View style={stylesProductDetail.buyContainer}>
+              <ProductAddInput item={item} />
+            </View>
           </View>
         </View>
       </View>
@@ -106,52 +99,41 @@ const stylesProductDetail = StyleSheet.create({
   },
   text: {
     width: '100%',
-    padding: 10,
     color: Colors.grayDark,
-    fontSize: 22,
-    fontFamily: 'Dosis-Bold',
+    fontFamily: 'Noto-Bold',
     textAlign: 'left'
   },
   textMin: {
-    width: '100%',
     paddingVertical: 5,
     paddingHorizontal: 10,
-    color: Colors.grayDark,
     fontSize: 18,
-    fontFamily: 'Dosis-Bold',
-    textAlign: 'left'
   },
-  textDescription: {
-    width: '100%',
+  textMax: {
     padding: 10,
-    color: Colors.grayDark,
-    fontSize: 20,
-    fontFamily: 'Dosis',
-    textAlign: 'left'
+    fontSize: 22,
   },
   textDescriptionMin: {
-    width: '100%',
     paddingVertical: 5,
     paddingHorizontal: 10,
-    color: Colors.grayDark,
     fontSize: 16,
-    fontFamily: 'Dosis',
-    textAlign: 'left'
+  },
+  textDescriptionMax: {
+    padding: 10,
+    fontSize: 20,
   },
   textPrice: {
     width: '100%',
-    padding: 10,
     color: Colors.grayDark,
-    fontSize: 24,
-    fontFamily: 'Dosis'
+    fontFamily: 'Noto-Bold'
   },
   textPriceMin: {
-    width: '100%',
     paddingVertical: 5,
     paddingHorizontal: 10,
-    color: Colors.grayDark,
     fontSize: 20,
-    fontFamily: 'Dosis-Bold'
+  },
+  textPriceMax: {
+    padding: 10,
+    fontSize: 24,
   },
   image: {
     flex: 1,
@@ -159,45 +141,36 @@ const stylesProductDetail = StyleSheet.create({
   },
   buttonBack: {
     width: '100%',
-    height: 40,
-    backgroundColor: Colors.coralAlter
-  },  
-  buttonBackMin: {
-    width: '100%',
-    height: 36,
     backgroundColor: Colors.coralAlter
   },
+  buttonBackMin: {
+    height: 36,
+  },
+  buttonBackMax: {
+    height: 40,
+  },
   textBack: {
-    width: '100%',
-    lineHeight: 40,
     color: Colors.grayDark,
-    fontSize: 22,
     fontFamily: 'Dosis-Bold',
     textAlign: 'center'
   },
   textBackMin: {
     lineHeight: 36,
-    color: Colors.grayDark,
-    fontSize: 18,
-    fontFamily: 'Dosis-Bold',
-    textAlign: 'center'
-  },
-  buyButton: {
-    height: 40,
-    padding: 5,
-    margin: 10,
-    borderRadius: 3,
-    backgroundColor: Colors.coralMain,
-    alignSelf: 'flex-start'
-  },
-  buyText: {
-    fontWeight: '600',
-    fontSize: 24,
-  },
-  buyTextMin: {
-    fontWeight: 'bold',
     fontSize: 18,
   },
+  textBackMax: {
+    width: '100%',
+    lineHeight: 40,
+    fontSize: 22,
+  },
+  buyContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    width: 80,
+    alignSelf: 'center'
+  }
 });
 
 export default ProductDetail;

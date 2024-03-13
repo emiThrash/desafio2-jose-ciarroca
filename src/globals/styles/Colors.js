@@ -9,5 +9,8 @@ export const Colors = {
     redAlert: '#4280fc',
     greenAlter: '#5ccda7',
     coralMain: '#98ffe0',
-    coralAlter: '#45c495'
+    coralAlter: '#45c495',
+    coralSh: '#5099af',
+    redSh: '#af5050',
+    violetSh: '#be8de1'
 };

@@ -1,19 +1,18 @@
-import { StyleSheet, TextInput, View, Pressable, Text, Image, useWindowDimensions } from 'react-native';
+import { StyleSheet, TextInput, View, Pressable, Text, Image } from 'react-native';
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Colors } from '../../globals/styles/Colors';
-import { DisplaySizes } from '../../globals/styles/DisplaySizes';
+import { IsUnderMinWidth } from '../../globals/styles/DisplaySizes';
 import { setProductSearchText } from '../../features/shop/shopSlice';
 import iconSearch from '../../../assets/icon-search.png';
 import iconCancel from '../../../assets/icon-cancel.png';
-
-//Search dentro de productos
 
 function ProductForm({lastSearch}) {
   const dispatch = useDispatch();
   const [productToSearch, setProductToSearch] = useState(lastSearch);
   const [error, setError] = useState("");
-  const { height, width } = useWindowDimensions();
+  
+  const isUnderMinWidth = IsUnderMinWidth();
 
   useEffect(() => {
     setProductToSearch(lastSearch);
@@ -40,14 +39,12 @@ function ProductForm({lastSearch}) {
     dispatch(setProductSearchText(""));
   };
 
-  //Incorporación del TextInput
-
   return(
     <>
       <View style={stylesProductForm.container}>
         <View style={stylesProductForm.col1}>
           <TextInput
-            style={width < DisplaySizes.minWidth ? stylesProductForm.inputMin : stylesProductForm.input}
+            style={[stylesProductForm.input, isUnderMinWidth ? stylesProductForm.inputMin : stylesProductForm.inputMax]}
             placeholder='Producto'
             placeholderTextColor={Colors.grayWhite}
             onChangeText={(text) => setProductToSearch(text)}
@@ -56,10 +53,10 @@ function ProductForm({lastSearch}) {
         <View style={stylesProductForm.col2}>
           <View style={stylesProductForm.button}>
             <Pressable onPress={onSearchProductPress}>
-              <Image source={iconSearch} style={width < DisplaySizes.minWidth ? stylesProductForm.iconMin : stylesProductForm.icon} />
+              <Image source={iconSearch} style={isUnderMinWidth ? stylesProductForm.iconMin : stylesProductForm.icon} />
             </Pressable>
             <Pressable onPress={onCleanPress}>
-              <Image source={iconCancel} style={width < DisplaySizes.minWidth ? stylesProductForm.iconMin : stylesProductForm.icon} />
+              <Image source={iconCancel} style={isUnderMinWidth ? stylesProductForm.iconMin : stylesProductForm.icon} />
             </Pressable>
           </View>
         </View>
@@ -68,7 +65,7 @@ function ProductForm({lastSearch}) {
         error == "" ?
         <></> :
         <View style={stylesProductForm.errorContainer}>
-          <Text style={width < DisplaySizes.minWidth ? stylesProductForm.errorTextMin : stylesProductForm.errorText}>{error}</Text>
+          <Text style={isUnderMinWidth ? stylesProductForm.errorTextMin : stylesProductForm.errorText}>{error}</Text>
         </View>
       }
     </>
@@ -90,28 +87,22 @@ const stylesProductForm = StyleSheet.create({
     width: '20%'
   },
   input: {
-    height: 35,
-    padding: 3,
-    borderTopLeftRadius: 0,
-    borderBottomLeftRadius: 0,
-    color: Colors.white,
-    borderWidth: 1,
-    borderColor: Colors.grayLight,
-    backgroundColor: Colors.grayLight,
-    fontSize: 25,
-    fontWeight: '600'
-  },
-  inputMin: {
-    height: 33,
     padding: 3,
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
     color: Colors.white,
     borderWidth: 1,
-    borderColor: Colors.greenAlter,
-    backgroundColor: Colors.greenAlter,
-    fontSize: 18,
+    borderColor: Colors.coralAlter,
+    backgroundColor: Colors.coralAlter,
     fontWeight: '400'
+  },
+  inputMin: {
+    height: 33,
+    fontSize: 18,
+  },
+  inputMax: {
+    height: 35,
+    fontSize: 20,
   },
   button: {
     height: 37,
@@ -119,17 +110,17 @@ const stylesProductForm = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    borderTopRightRadius: 0,
-    borderBottomRightRadius: 0,
-    borderColor: Colors.greenAlter,
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 5,
+    borderColor: Colors.coralAlter,
     borderWidth: 2
   },
-  iconMin: {
-    width: 22,
-    height: 22,
+  icon: {
+    width: 24,
+    height: 24,
     alignSelf: 'flex-end',
   },
-  icon: {
+  iconMin: {
     width: 22,
     height: 22,
     alignSelf: 'flex-end',
@@ -146,7 +137,6 @@ const stylesProductForm = StyleSheet.create({
     color: Colors.redAlert,
     fontSize: 16
   }
-  
 });
 
 export default ProductForm;

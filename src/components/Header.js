@@ -1,19 +1,29 @@
-import { StyleSheet, Text, View, Image, Pressable, useWindowDimensions } from 'react-native';
+import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Colors } from '../globals/styles/Colors';
-import { DisplaySizes } from '../globals/styles/DisplaySizes';
+import { IsUnderMinWidth } from '../globals/styles/DisplaySizes';
 import { setShowMenu } from '../features/shop/shopSlice';
+import { logout } from '../features/auth/authSlice';
+import { deleteSession } from '../db';
 import CategoryList from './categories/CategoryList';
 import iconBars from '../../assets/icon-bars.png';
+import iconLogout from '../../assets/icon-logout.png';
 
 function Header({navigation}) {
   const dispatch = useDispatch();
   const showMenu = useSelector(state => state.shopReducer.value.showMenu);
-  const { height, width } = useWindowDimensions();
+  const { localId } = useSelector(state => state.authReducer.value);
+
+  const isUnderMinWidth = IsUnderMinWidth();
   
   const visibleListTrigger = () => {
     dispatch(setShowMenu(!showMenu));
+  }
+
+  const doLogout = async () => {
+    dispatch(logout());
+    await deleteSession({localId});
   }
 
 
@@ -29,10 +39,12 @@ function Header({navigation}) {
         <View style={stylesHeader.midColumn}>
           <View style={stylesHeader.brand}>
             <Text style={width < DisplaySizes.minWidth ? stylesHeader.brandTextMin : stylesHeader.brandText}>Lit Design</Text>
-          </View>
+            </View>
         </View>
         <View style={stylesHeader.sideColumn}>
-
+          <Pressable onPress={doLogout}>
+            <Image source={iconLogout} style={isUnderMinWidth ? stylesHeader.iconMin : stylesHeader.icon} />
+          </Pressable>
         </View>
       </View>
       {

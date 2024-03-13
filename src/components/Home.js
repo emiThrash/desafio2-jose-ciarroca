@@ -1,14 +1,14 @@
-import { StyleSheet, Text, View, useWindowDimensions } from 'react-native';
-import { DisplaySizes } from '../globals/styles/DisplaySizes';
+import { StyleSheet, Text, View } from 'react-native';
+import { DisplaySizes, IsUnderMinWidth } from '../globals/styles/DisplaySizes';
 
 
 function Home({navigation}){
-  const { height, width } = useWindowDimensions();
+  const isUnderMinWidth = IsUnderMinWidth();
 
   return(
     <View style={styleHome.container}>
-      <Text style={width < DisplaySizes.minWidth ? styleHome.textWelcomeMin : styleHome.textWelcome}>Dev-&-Design</Text>
-      <Text style={width < DisplaySizes.minWidth ? styleHome.textMin : styleHome.text}>Servicios de Diseño y Desarrollo</Text>
+      <Text style={[styleHome.textWelcome, isUnderMinWidth ? styleHome.textWelcomeMin : styleHome.textWelcomeMax]}>Dev-&-Design</Text>
+      <Text style={[styleHome.text, isUnderMinWidth ? styleHome.textMin : styleHome.textMax]}>Servicios de Diseño y Desarrollo</Text>
     </View>
   );
 }
@@ -16,36 +16,34 @@ function Home({navigation}){
 const styleHome = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 10,
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingBottom: DisplaySizes.paddingBottomNavigator
   },
   textWelcome: {
     width: '100%',
-    marginVertical: 10,
-    fontSize: 22,
-    fontFamily: 'Dosis-Bold',
+    fontFamily: 'Noto-Bold',
     textAlign: 'center'
   },
   textWelcomeMin: {
-    width: '100%',
     marginVertical: 6,
     fontSize: 20,
-    fontFamily: 'Dosis-Bold',
-    textAlign: 'center'
+  },
+  textWelcomeMax: {
+    marginVertical: 10,
+    fontSize: 22,
   },
   text: {
     width: '100%',
-    fontSize: 20,
-    fontFamily: 'Dosis',
-    textAlign: 'center'
+    fontFamily: 'Noto',
+    textAlign: 'justify'
   },
   textMin: {
-    width: '100%',
-    fontSize: 12,
-    fontFamily: 'Dosis',
-    textAlign: 'justify'
+    fontSize: 16,
+  },
+  textMax: {
+    fontSize: 20,
   },
 });
   

@@ -1,34 +1,26 @@
-import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, FlatList, Pressable, useWindowDimensions } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Colors } from '../../globals/styles/Colors';
-import { DisplaySizes } from '../../globals/styles/DisplaySizes';
+import { DisplaySizes, IsUnderMinWidth, IsLandscape } from '../../globals/styles/DisplaySizes';
 import OrderCartRow from './OrderCartRow';
 
 function OrderDetail({navigation}) {
-  const { height, width } = useWindowDimensions();
   const item = useSelector(state => state.shopReducer.value.orderCartSelected);
-  const [ isLandscape, setIsLandscape ] = useState(false);
-
-  useEffect(()=>{
-    if(width > height){
-      setIsLandscape(true);
-    }else{
-      setIsLandscape(false);
-    }
-  }, [height, width]);
+  
+  const isUnderMinWidth = IsUnderMinWidth();
+  const isLandscape = IsLandscape();
 
   const onBackToList = () => {
     navigation.navigate("Order");
   };
 
   return(
-    <View style={isLandscape ? stylesOrderDetail.containerLandscape : stylesOrderDetail.container}>
+    <View style={[stylesOrderDetail.container, isLandscape ? stylesOrderDetail.containerLandscape : stylesOrderDetail.containerPortrait]}>
       <View style={stylesOrderDetail.zoneBack}>
         <Pressable
           onPress={onBackToList}
-          style={width < DisplaySizes.minWidth ? stylesOrderDetail.buttonBackMin : stylesOrderDetail.buttonBack}>
-          <Text style={width < DisplaySizes.minWidth ? stylesOrderDetail.textBackMin : stylesOrderDetail.textBack}>
+          style={[stylesOrderDetail.buttonBack, isUnderMinWidth ? stylesOrderDetail.buttonBackMin : stylesOrderDetail.buttonBackMax]}>
+          <Text style={[stylesOrderDetail.textBack, isUnderMinWidth ? stylesOrderDetail.textBackMin : stylesOrderDetail.textBackMax]}>
             Volver a la lista
           </Text>
         </Pressable>
@@ -47,20 +39,19 @@ function OrderDetail({navigation}) {
   );
 }
 
+
 const stylesOrderDetail = StyleSheet.create({
   container: {
     flexDirection: 'column',
     alignItems: 'top',
     justifyContent: 'top',
     flex: 1,
-    paddingBottom: DisplaySizes.paddingBottomNavigator,
   },
   containerLandscape: {
-    flexDirection: 'column',
-    alignItems: 'top',
-    justifyContent: 'top',
-    flex: 1,
     paddingBottom: DisplaySizes.paddingBottomNavigatorLandscape,
+  },
+  containerPortrait: {
+    paddingBottom: DisplaySizes.paddingBottomNavigator,
   },
   listContainer: {
     flex: 1,
@@ -75,28 +66,27 @@ const stylesOrderDetail = StyleSheet.create({
   },
   buttonBack: {
     width: '100%',
-    height: 40,
-    backgroundColor: Colors.coralAlter
-  },  
-  buttonBackMin: {
-    width: '100%',
-    height: 36,
     backgroundColor: Colors.coralAlter
   },
+  buttonBackMin: {
+    height: 36,
+  },
+  buttonBackMax: {
+    height: 40,
+  },
   textBack: {
-    width: '100%',
-    lineHeight: 40,
     color: Colors.grayDark,
-    fontSize: 22,
     fontFamily: 'Dosis-Bold',
     textAlign: 'center'
   },
   textBackMin: {
     lineHeight: 36,
-    color: Colors.grayDark,
     fontSize: 18,
-    fontFamily: 'Dosis-Bold',
-    textAlign: 'center'
+  },
+  textBackMax: {
+    width: '100%',
+    lineHeight: 40,
+    fontSize: 22,
   },
   total: {
     paddingRight: 5,

@@ -1,25 +1,46 @@
-import { StyleSheet, Pressable, View, Text, useWindowDimensions } from 'react-native';
+import { StyleSheet, Pressable, View, Text, ScrollView } from 'react-native';
 import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import Toast from 'react-native-toast-message';
 import { Colors } from '../../globals/styles/Colors';
-import { DisplaySizes } from '../../globals/styles/DisplaySizes';
+import { DisplaySizes, IsUnderMinWidth } from '../../globals/styles/DisplaySizes';
 import { useLoginMutation } from '../../services/authService';
 import { setUser } from '../../features/auth/authSlice';
 import { signinSchema } from '../../validations/signinSchema';
+import { insertSession, deleteSession } from '../../db';
 import InputForm from '../forms/InputForm';
 
 function Login({navigation}) {
   const dispatch = useDispatch();
-  const { height, width } = useWindowDimensions();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [triggerSignup, result] = useLoginMutation();
 
+  const isUnderMinWidth = IsUnderMinWidth();
+
   useEffect(()=>{
     if(result.data){
       dispatch(setUser({email: result.data.email, idToken: result.data.idToken, localId: result.data.localId}));
+      
+      deleteSession({localId: result.data.localId});
+
+      insertSession({
+        email: result.data.email,
+        localId: result.data.localId,
+        token: result.data.idToken
+      })
+      .then(result => {
+        // acciones adicionales al login exitoso
+      })
+      .catch(error => {
+        Toast.show({
+          type: 'error',
+          text1: 'Error al iniciar sesión',
+          text2: error.message
+        });
+      });
     }
   }, [result]);
 
@@ -52,11 +73,11 @@ function Login({navigation}) {
   }
 
   return(
-    <View style={stylesLogin.container}>
+    <ScrollView style={stylesLogin.container}>
       <View style={stylesLogin.card}>
         <View>
-          <Text style={width < DisplaySizes.minWidth ? stylesLogin.titleMin : stylesLogin.title}>
-            Usuario
+          <Text style={[stylesLogin.title, isUnderMinWidth ? stylesLogin.titleMin : stylesLogin.titleMax]}>
+            Datos de la cuenta
           </Text>
         </View>
         <View>
@@ -75,54 +96,52 @@ function Login({navigation}) {
         </View>
         <View style={stylesLogin.colCenter}>
           <Pressable onPress={onSubmitForm} style={stylesLogin.submitButton}>
-            <Text style={width < DisplaySizes.minWidth ? stylesLogin.submitTextMin : stylesLogin.submitText}>
-              Loggin
+            <Text style={[stylesLogin.submitText, isUnderMinWidth ? stylesLogin.submitTextMin : stylesLogin.submitTextMax]}>
+              Entrar
             </Text>
           </Pressable>
         </View>
         <View style={stylesLogin.colCenter}>
-          <Text style={width < DisplaySizes.minWidth ? stylesLogin.registerTextMin : stylesLogin.registerText}>
+          <Text style={isUnderMinWidth ? stylesLogin.registerTextMin : stylesLogin.registerText}>
             ¿No tienes cuenta aún? 
           </Text>
           <Pressable onPress={onSignupForm}>
-            <Text style={width < DisplaySizes.minWidth ? stylesLogin.registerTextLinkMin : stylesLogin.registerTextLink}>
+            <Text style={isUnderMinWidth ? stylesLogin.registerTextLinkMin : stylesLogin.registerTextLink}>
               Registrarme
             </Text>
           </Pressable>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const stylesLogin = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    padding: 19
+    flex: 0,
+    padding: 10
   },
   card: {
     flexDirection: 'column',
     padding: 5,
-    borderRadius: 14,
+    borderRadius: 10,
     width: '100%',
-    backgroundColor: Colors.coralAlter,
+    backgroundColor: Colors.greenAlter,
+    marginBottom: DisplaySizes.paddingBottomNavigator
   },
   title: {
-    marginBottom: 10,
     textAlign: 'center',
-    fontSize: 24,
     fontFamily: 'Dosis-Bold',
     color: Colors.black
   },
   titleMin: {
     marginBottom: 8,
-    textAlign: 'center',
     fontSize: 20,
-    fontFamily: 'Dosis-Bold',
-    color: Colors.black
+  },
+  titleMax: {
+    marginBottom: 10,
+    fontSize: 24,
   },
   colCenter: {
     justifyContent: 'center',
@@ -132,22 +151,22 @@ const stylesLogin = StyleSheet.create({
     height: 40,
     width: '50%',
     alignSelf: 'flex-start',
-    padding: 4,
-    margin: 19,
+    padding: 5,
+    margin: 10,
     borderRadius: 3,
     backgroundColor: Colors.grayDark
   },
   submitText: {
-    fontWeight: '600',
-    fontSize: 21,
     color: Colors.white,
     textAlign: 'center',
+  },
+  submitTextMax: {
+    fontWeight: '600',
+    fontSize: 24,
   },
   submitTextMin: {
     fontWeight: 'bold',
     fontSize: 18,
-    color: Colors.white,
-    textAlign: 'center',
   },
   registerText: {
     fontSize: 20,
