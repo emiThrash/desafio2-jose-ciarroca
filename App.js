@@ -4,6 +4,20 @@ import { Provider } from 'react-redux';
 import Store from './src/store';
 import { Fonts } from './src/globals/styles/Fonts';
 import MainNavigator from './src/navigation/MainNavigator';
+import { init } from './src/db';
+import CustomToast from './src/components/shared/CustomToast';
+
+init()
+  .then(() => {
+    //
+  })
+  .catch(error => {
+    Toast.show({
+      type: 'error',
+      text1: 'Error al inicializar la DB',
+      text2: error.message
+    });
+  });
 
 export default function App() {
   const [fontsLoaded] = useFonts(Fonts);
@@ -17,6 +31,7 @@ export default function App() {
       <SafeAreaView style={stylesApp.container}>
         <StatusBar/>
         <MainNavigator/>
+        <CustomToast />
       </SafeAreaView>
     </Provider>
   );
